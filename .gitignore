@@ -1,4 +1,5 @@
 .idea/
+lib/
+out/
 *.iml
 *.iws
-*.xml
