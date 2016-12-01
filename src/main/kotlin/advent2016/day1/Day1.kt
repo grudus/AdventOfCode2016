@@ -1,10 +1,9 @@
 package advent2016.day1
 
 import advent2016.Day
-import java.io.File
 
 
-class Day1 : Day() {
+class Day1(inputString: String? = null) : Day(inputString) {
 
     val actualPosition = Point(0, 0)
 

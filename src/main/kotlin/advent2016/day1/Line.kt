@@ -2,6 +2,11 @@ package advent2016.day1
 
 class Line(val p1: Point, val p2: Point) {
 
+    init {
+        if (!isHorizontal() && !isVertical())
+            throw IllegalArgumentException("Line must be vertical or horizontal")
+    }
+
     fun biggerX() = Math.max(p1.x, p2.x)
     fun smallerX() = Math.min(p1.x, p2.x)
     fun biggerY() = Math.max(p1.y, p2.y)
@@ -34,6 +39,7 @@ class Line(val p1: Point, val p2: Point) {
             || (!isHorizontal() && !anotherLine.isHorizontal())
 
     fun isHorizontal() = p1.y - p2.y == 0
+    fun isVertical() = p1.x - p2.x == 0
 
     override fun toString() = "(${p1.x},${p1.y}) -> (${p2.x}, ${p2.y})"
 }
