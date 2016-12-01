@@ -14,4 +14,5 @@ abstract class Day {
 
     abstract fun firstStar() : String
     abstract fun secondStar() : String
+    abstract fun reset()
 }
