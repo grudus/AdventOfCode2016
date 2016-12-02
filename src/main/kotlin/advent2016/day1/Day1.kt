@@ -76,7 +76,7 @@ class Day1(inputString: String? = null) : Day(inputString) {
     }
 
 
-    override fun reset() {
+    override fun reset(f: (Unit) -> Unit) {
         actualPosition.x = 0
         actualPosition.y = 0
         actualDirection = Direction.N

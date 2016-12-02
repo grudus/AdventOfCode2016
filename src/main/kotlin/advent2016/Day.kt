@@ -14,5 +14,5 @@ abstract class Day(input: String? = null) {
 
     abstract fun firstStar() : String
     abstract fun secondStar() : String
-    abstract fun reset()
+    abstract fun reset(f: (Unit) -> Unit = {})
 }
