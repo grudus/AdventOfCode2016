@@ -42,17 +42,26 @@ class Day2(input: String? = null, val startPosition: ArrayIndex) : Day(input) {
 
     private fun possibleMove(move: Char, keyPad: Array<Array<Char>> = keypad): Boolean {
         when (move) {
-            'L' -> if (actualPositionIndex.column == 0
-                    || keyPad[actualPositionIndex.row][actualPositionIndex.column - 1] == NULL) return false
-            'R' -> if (actualPositionIndex.column == keyPad[actualPositionIndex.row].size - 1
-                    || keyPad[actualPositionIndex.row][actualPositionIndex.column + 1] == NULL) return false
-            'U' -> if (actualPositionIndex.row == 0
-                    || keyPad[actualPositionIndex.row - 1][actualPositionIndex.column] == NULL) return false
-            'D' -> if (actualPositionIndex.row == keyPad.size - 1
-                    || keyPad[actualPositionIndex.row + 1][actualPositionIndex.column] == NULL) return false
+            'L' -> if (isLeftEdge() || !canMoveLeft(keyPad)) return false
+            'R' -> if (isRightEdge(keyPad) || !canMoveRight(keyPad)) return false
+            'U' -> if (isTopEdge() || !canMoveUp(keyPad)) return false
+            'D' -> if (isBottomEdge(keyPad) || !canMoveDown(keyPad)) return false
         }
         return true
     }
+
+    private fun  isLeftEdge() = actualPositionIndex.column == 0
+    private fun  canMoveLeft(keyPad: Array<Array<Char>>) = keyPad[actualPositionIndex.row][actualPositionIndex.column - 1] != NULL
+    
+    private fun  isRightEdge(keyPad: Array<Array<Char>>) = actualPositionIndex.column == keyPad[actualPositionIndex.row].size - 1
+    private fun  canMoveRight(keyPad: Array<Array<Char>>) = keyPad[actualPositionIndex.row][actualPositionIndex.column + 1] != NULL
+    
+    private fun  isTopEdge() = actualPositionIndex.row == 0
+    private fun canMoveUp(keyPad: Array<Array<Char>>) = keyPad[actualPositionIndex.row - 1][actualPositionIndex.column] != NULL
+    
+    private fun isBottomEdge(keyPad: Array<Array<Char>>) = actualPositionIndex.row == keyPad.size - 1
+    private fun canMoveDown(keyPad: Array<Array<Char>>) = keyPad[actualPositionIndex.row + 1][actualPositionIndex.column] != NULL
+
 
     private fun makeMove(char: Char) {
         when (char) {
@@ -74,6 +83,5 @@ class Day2(input: String? = null, val startPosition: ArrayIndex) : Day(input) {
     }
 
 
-    override fun reset(f: (Unit) -> Unit) {
-    }
+    override fun reset(f: (Unit) -> Unit) {}
 }
