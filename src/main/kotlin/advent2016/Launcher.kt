@@ -10,10 +10,5 @@ fun main(args: Array<String>) {
     val actualDay = Day3()
 
     println("First star: ${actualDay.firstStar()}")
-
-//    actualDay.reset {
-//        actualDay.actualPositionIndex = ArrayIndex(2, 0)
-//    }
-//
-//    println("Second star: ${actualDay.secondStar()}")
+    println("Second star: ${actualDay.secondStar()}")
 }
