@@ -16,17 +16,17 @@ class Day3(input: String? = null) : Day(input) {
 
 
     override fun firstStar(): String {
-        val size = triangleSides.filter {sides ->
-            (0..2).filter { index -> sides.filterIndexed { i, side -> i != index }.sum() > sides[index]}.size == 3
-        }.size
-        return size.toString()
+        return countTriangles(triangleSides).toString()
     }
 
     override fun secondStar(): String {
-        val size = verticalTriangleSides.filter {sides ->
+        return countTriangles(verticalTriangleSides).toString()
+    }
+
+    private fun countTriangles(matrix: List<List<Int>>) : Int {
+        return matrix.filter {sides ->
             (0..2).filter { index -> sides.filterIndexed { i, side -> i != index }.sum() > sides[index]}.size == 3
         }.size
-        return size.toString()
     }
 
     override fun reset(f: (Unit) -> Unit) {}
