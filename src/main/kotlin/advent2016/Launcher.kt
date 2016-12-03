@@ -1,7 +1,5 @@
 package advent2016
 
-import advent2016.day2.ArrayIndex
-import advent2016.day2.Day2
 import advent2016.day3.Day3
 
 fun main(args: Array<String>) {

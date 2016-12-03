@@ -9,18 +9,20 @@ class Day3(input: String? = null) : Day(input) {
             .map { it.trim().split(Regex("\\s+")) }
             .map { it.map(String::toInt) }
 
-    val verticalTriangleSides: List<List<Int>> = (0..triangleSides.size-1).map {index ->
-        val row = index - (index % 3)
-        (0..2).map { triangleSides[it+row][index%3] }
-    }
-
 
     override fun firstStar(): String {
         return countTriangles(triangleSides).toString()
     }
 
     override fun secondStar(): String {
-        return countTriangles(verticalTriangleSides).toString()
+        return countTriangles(generateVerticalTriangles()).toString()
+    }
+
+    private fun generateVerticalTriangles() : List<List<Int>> {
+        return (0..triangleSides.size - 1).map { index ->
+            val row = index - (index % 3)
+            (0..2).map { triangleSides[it + row][index % 3] }
+        }
     }
 
     private fun countTriangles(matrix: List<List<Int>>) : Int {
@@ -28,6 +30,4 @@ class Day3(input: String? = null) : Day(input) {
             (0..2).filter { index -> sides.filterIndexed { i, side -> i != index }.sum() > sides[index]}.size == 3
         }.size
     }
-
-    override fun reset(f: (Unit) -> Unit) {}
 }

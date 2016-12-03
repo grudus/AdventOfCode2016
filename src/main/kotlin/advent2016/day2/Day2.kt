@@ -3,7 +3,7 @@ package advent2016.day2
 import advent2016.Day
 
 
-class Day2(input: String? = null, val startPosition: ArrayIndex) : Day(input) {
+class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
 
     val input: List<String> = super.inputString.split(Regex("\\n"))
     val NULL = 'X'
@@ -81,7 +81,4 @@ class Day2(input: String? = null, val startPosition: ArrayIndex) : Day(input) {
         }
         return output
     }
-
-
-    override fun reset(f: (Unit) -> Unit) {}
 }
