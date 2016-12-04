@@ -1,84 +1,41 @@
 package advent2016.day1
 
 import advent2016.Day
+import advent2016.day4.find
+import java.util.*
 
 
 class Day1(inputString: String? = null) : Day(inputString) {
 
-    val actualPosition = Point(0, 0)
+    enum class Direction(val dx: Int, val dy: Int) {N(0, 1), E(1, 0), S(0, -1), W(-1, 0) }
 
-    enum class Direction(val counter: Int) {
-
-        N(0), E(1), S(2), W(3);
-
-        companion object {
-            fun from(findValue: Int): Direction = Direction.values().first { it.counter == findValue }
-        }
-
-    }
-
-    private var actualDirection = Direction.N
-    private val input: List<String>
-
-    init {
-        input = super.inputString.split(", ")
-    }
-
+    private val input = super.inputString.split(", ").map { Pair(findDirection(it[0]), it.find(Regex("\\d+")).toInt()) }
+    var current = 0
 
     override fun firstStar(): String {
-        input.map { Pair(it[0], it.substring(1).toInt()) }.forEach {
-            handleChangedDirection(it)
-        }
+        val totalMove = input.groupBy { it.first }
+                .map { Pair(it.key, it.value.sumBy { it.second }) }
+                .map { Pair(it.first.dx * it.second, it.first.dy * it.second) }
+                .reduce { p1, p2 -> Pair(p1.first + p2.first, p1.second + p2.second) }
 
-        return calculateDistance().toString()
+        return (Math.abs(totalMove.first) + Math.abs(totalMove.second)).toString()
     }
 
-    private fun handleChangedDirection(it: Pair<Char, Int>) {
-        when (it.first) {
-            'R' -> {
-                actualDirection = if (actualDirection.counter + 1 > 3) Direction.from(0) else Direction.from(actualDirection.counter + 1)
-                go(it.second)
-            }
-            'L' -> {
-                actualDirection = if (actualDirection.counter - 1 < 0) Direction.from(3) else Direction.from(actualDirection.counter - 1)
-                go(it.second)
-            }
-        }
+    private fun findDirection(char: Char) : Direction {
+        current = if (char == 'L') (4 + --current) % 4 else ++current % 4
+        return Direction.values()[current]
     }
-
-    private fun go(distance: Int) {
-        when (actualDirection) {
-            Direction.N -> actualPosition.y += distance
-            Direction.E -> actualPosition.x += distance
-            Direction.S -> actualPosition.y -= distance
-            Direction.W -> actualPosition.x -= distance
-        }
-    }
-
-    private fun calculateDistance(p: Point = Point(actualPosition.x, actualPosition.y)) = Math.abs(p.x) + Math.abs(p.y)
-
 
     override fun secondStar(): String {
-        val lines: MutableList<Line> = mutableListOf()
+        var actual = Pair(0, 0)
+        val path = input.map { pair ->
+            (0..pair.second-1).map {
+                actual = Pair(actual.first + pair.first.dx, actual.second + pair.first.dy)
+                actual
+            }
+        }.reduce { l1, l2 -> l1 + l2 }
 
-        input.map { Pair(it[0], it.substring(1).toInt()) }
-                .forEach {
-                    val previousPosition = actualPosition.copy()
-                    handleChangedDirection(it)
-                    val point = lines.find { it.intersect(Line(previousPosition, actualPosition)) }?.intersectPoint(Line(previousPosition, actualPosition))
-                    if (point != null) {
-                        return calculateDistance(point).toString()
-                    }
-                    lines.add(Line(previousPosition, actualPosition.copy()))
-                }
-
-        return "-1"
-    }
-
-
-    override fun reset(f: (Unit) -> Unit) {
-        actualPosition.x = 0
-        actualPosition.y = 0
-        actualDirection = Direction.N
+        val repeatedPoint = path.find { Collections.frequency(path, it) > 1 } ?: Pair(0, 0)
+        return (Math.abs(repeatedPoint.first) + Math.abs(repeatedPoint.second)).toString()
     }
 }
