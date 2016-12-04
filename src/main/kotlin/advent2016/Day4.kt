@@ -1,6 +1,5 @@
-package advent2016.day4
+package advent2016
 
-import advent2016.Day
 import java.util.regex.Pattern
 import kotlin.comparisons.compareByDescending
 import kotlin.comparisons.thenBy

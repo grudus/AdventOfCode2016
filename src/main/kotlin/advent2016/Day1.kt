@@ -1,7 +1,5 @@
-package advent2016.day1
+package advent2016
 
-import advent2016.Day
-import advent2016.day4.find
 import java.util.*
 
 

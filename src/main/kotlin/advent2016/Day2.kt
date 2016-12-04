@@ -1,6 +1,4 @@
-package advent2016.day2
-
-import advent2016.Day
+package advent2016
 
 
 class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
@@ -62,3 +60,4 @@ class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
         return createMovement(keypad2)
     }
 }
+data class ArrayIndex(var row: Int, var column: Int)

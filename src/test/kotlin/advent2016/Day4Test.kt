@@ -1,6 +1,5 @@
-package day4
+package advent2016
 
-import advent2016.day4.Day4
 import io.kotlintest.specs.FlatSpec
 
 

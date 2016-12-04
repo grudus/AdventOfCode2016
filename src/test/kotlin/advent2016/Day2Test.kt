@@ -1,8 +1,5 @@
-package day2
+package advent2016
 
-import advent2016.day1.Day1
-import advent2016.day2.ArrayIndex
-import advent2016.day2.Day2
 import io.kotlintest.specs.FlatSpec
 
 

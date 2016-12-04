@@ -1,6 +1,4 @@
-package advent2016.day3
-
-import advent2016.Day
+package advent2016
 
 
 class Day3(input: String? = null) : Day(input) {

@@ -1,6 +1,5 @@
-package day1
+package advent2016
 
-import advent2016.day1.Day1
 import io.kotlintest.specs.FlatSpec
 
 class Day1Test : FlatSpec() {
