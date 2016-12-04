@@ -18,8 +18,8 @@ class Day4(input: String? = null) : Day(input) {
     }
 
     private fun isValid(room: Room): Boolean {
-        val sorted = room.charOccurrence().sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
-        return sorted.subList(0, room.checkSum.length).map { it.first.toString() }.joinToString("") == room.checkSum
+        return room.sortedCharOccurrence().subList(0, room.checkSum.length)
+                .map { it.first.toString() }.joinToString("") == room.checkSum
     }
 
     override fun secondStar(): String {
@@ -37,7 +37,8 @@ class Day4(input: String? = null) : Day(input) {
 }
 
 data class Room(val letters: String, val id: Int, val checkSum: String) {
-    fun charOccurrence() = letters.replace("-", "").groupBy { it }.map { Pair(it.key, it.value.size) }
+    fun sortedCharOccurrence() = letters.replace("-", "").groupBy { it }.map { Pair(it.key, it.value.size) }
+            .sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
 }
 
 fun String.find(regex: Regex): String {
