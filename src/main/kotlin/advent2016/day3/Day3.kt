@@ -19,7 +19,7 @@ class Day3(input: String? = null) : Day(input) {
     }
 
     private fun generateVerticalTriangles() : List<List<Int>> {
-        return (0..triangleSides.size - 1).map { index ->
+        return triangleSides.indices.map { index ->
             val row = index - (index % 3)
             (0..2).map { triangleSides[it + row][index % 3] }
         }
