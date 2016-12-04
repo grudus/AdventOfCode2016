@@ -7,36 +7,23 @@ import kotlin.comparisons.thenBy
 
 class Day4(input: String? = null) : Day(input) {
 
-    private fun firstStarInput(): List<Tuple> {
-        return super.inputString.split(Regex("\\n"))
-                .map { string ->
-                    val charOccurrenceMap = string.replace("-", "").find(Regex("[a-z]+"))
-                            .groupBy { it }.map { Pair(it.key, it.value.size) }.toMap()
-
-                    Tuple(charOccurrenceMap, string.find(Regex("\\d+")).toInt(), string.find(Regex("(?<=\\[).+?(?=\\])")))
-                }
-    }
-
-    private fun secondStarInput(): List<Pair<String, Int>> {
-        return super.inputString.split(Regex("\\n"))
-                .map { Pair(it.find(Regex("[a-z-]+")), it.find(Regex("\\d+")).toInt()) }
-    }
-
-
-    private fun isValid(tuple: Tuple): Boolean {
-        val sorted = tuple.charOccurrence.toList().sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
-        return sorted.subList(0, tuple.checkSum.length).map { it.first.toString() }.joinToString("") == tuple.checkSum
+    private fun inputList(): List<Room> {
+        return super.inputString.split(Regex("\\n")).map { string ->
+            Room(string.find(Regex("[a-z-]+")), string.find(Regex("\\d+")).toInt(), string.find(Regex("(?<=\\[).+?(?=\\])")))
+        }
     }
 
     override fun firstStar(): String {
-        return firstStarInput().filter { it -> isValid(it) }.sumBy { it.id }.toString()
+        return inputList().filter { it -> isValid(it) }.sumBy(Room::id).toString()
+    }
+
+    private fun isValid(room: Room): Boolean {
+        val sorted = room.charOccurrence().sortedWith(compareByDescending<Pair<Char, Int>> { it.second }.thenBy { it.first })
+        return sorted.subList(0, room.checkSum.length).map { it.first.toString() }.joinToString("") == room.checkSum
     }
 
     override fun secondStar(): String {
-        val stringIdPairs = secondStarInput().map {
-            pair ->
-            Pair(cipher(pair.first, pair.second), pair.second)
-        }
+        val stringIdPairs = inputList().map { room -> Pair(cipher(room.letters, room.id), room.id) }
         return stringIdPairs.find { it.first.startsWith("northpole") }?.second.toString()
     }
 
@@ -49,7 +36,9 @@ class Day4(input: String? = null) : Day(input) {
     }
 }
 
-data class Tuple(val charOccurrence: Map<Char, Int>, val id: Int, val checkSum: String)
+data class Room(val letters: String, val id: Int, val checkSum: String) {
+    fun charOccurrence() = letters.replace("-", "").groupBy { it }.map { Pair(it.key, it.value.size) }
+}
 
 fun String.find(regex: Regex): String {
     val m = Pattern.compile(regex.pattern).matcher(this)
