@@ -13,14 +13,8 @@ not-a-real-room-404[oarel]
 totally-real-room-200[decoy]""").firstStar() shouldBe "1514"
         }
 
-//        "The second part" should "work for the given case" {
-//            Day3(
-//                    """101 301 501
-//102 302 502
-//103 303 503
-//201 401 601
-//202 402 602
-//203 403 603 """).secondStar() shouldBe "6"
-//        }
+        "The second part" should "work for the given case" {
+            Day4().cipher("qzmt-zixmtkozy-ivhz-343", 343) shouldBe "very encrypted name"
+        }
     }
 }

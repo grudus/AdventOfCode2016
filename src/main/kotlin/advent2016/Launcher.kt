@@ -8,6 +8,8 @@ fun main(args: Array<String>) {
     val actualDay = Day4()
 
     println("First star: ${actualDay.firstStar()}")
-//    println("Second star: ${actualDay.secondStar()}")
+    println("Second star: ${actualDay.secondStar()}")
+
 
 }
+
