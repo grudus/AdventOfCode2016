@@ -7,16 +7,28 @@ class Day5(input: String? = null) : Day(input) {
     val crypt: MessageDigest = MessageDigest.getInstance("MD5")
 
     override fun firstStar(): String {
-        var index = 0L
-        var password = ""
+        return findPassword(0, listOf(), { int, hash -> Pair(int, hash[5]) }).map { it.second }.joinToString("")
+    }
 
-        do {
-            val hash = findHash(inputString + index++)
-            if (hash.startsWith("00000")) password += hash[5]
 
-        } while (password.length != 8)
+    tailrec fun findPassword(index: Int, list: List<Pair<Int, Char>>, f: (Int, String) -> Pair<Int, Char>?): List<Pair<Int, Char>> {
+        if (list.size == 8) return list
 
-        return password
+        val hashIndexPair = findValidHash(index)
+        val indexCharPair = f.invoke(index, hashIndexPair.first)
+
+        if (indexCharPair == null || list.map { it.first }.contains(indexCharPair.first))
+            return findPassword(hashIndexPair.second + 1, list, f)
+
+        return findPassword(hashIndexPair.second + 1, list + indexCharPair, f)
+    }
+
+    tailrec fun findValidHash(index: Int): Pair<String, Int> {
+        val hash = findHash(inputString + index.toString())
+        if (hash.startsWith("00000"))
+            return Pair(hash, index)
+
+        return findValidHash(index + 1)
     }
 
     fun findHash(actual: String): String {
@@ -26,24 +38,11 @@ class Day5(input: String? = null) : Day(input) {
     }
 
     override fun secondStar(): String {
-        var index = 0L
-        val password = arrayOfNulls<Char>(8)
-        var passwordChars: Int = 0
-
-        do {
-            val hash = findHash(inputString + index++)
-            if (hash.startsWith("00000")) {
-                if (Character.isAlphabetic(hash[5].toInt())) continue
-
-                val idx = hash[5].toString().toInt()
-                if (idx > 7 || password[idx] != null) continue
-                password[idx] = hash[6]
-                passwordChars++
-            }
-
-        } while (passwordChars != 8)
-
-        return password.joinToString("")
+        return findPassword(0, listOf(), { int, hash ->
+            if (hash[5].toDigit(16) > 7) null
+            else Pair(hash[5].toDigit(), hash[6])
+        }).sortedBy { it.first }.map { it.second }.joinToString("")
     }
-
 }
+
+fun Char.toDigit(radix: Int = 10) = Integer.parseInt(this.toString(), radix)

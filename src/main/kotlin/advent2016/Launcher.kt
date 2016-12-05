@@ -9,5 +9,6 @@ fun main(args: Array<String>) {
     println("First star: ${actualDay.firstStar()}")
     println("Second star: ${actualDay.secondStar()}")
 
+
 }
 
