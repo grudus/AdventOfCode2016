@@ -10,25 +10,21 @@ class Day5(input: String? = null) : Day(input) {
         return findPassword(0, listOf(), { int, hash -> Pair(int, hash[5]) }).map { it.second }.joinToString("")
     }
 
+    tailrec fun findPassword(index: Int, pass: List<Pair<Int, Char>>, f: (Int, String) -> Pair<Int, Char>?): List<Pair<Int, Char>> {
+        if (pass.size == 8) return pass
 
-    tailrec fun findPassword(index: Int, list: List<Pair<Int, Char>>, f: (Int, String) -> Pair<Int, Char>?): List<Pair<Int, Char>> {
-        if (list.size == 8) return list
+        val hashIndex = findValidHash(index)
+        val indexChar = f.invoke(index, hashIndex.first)
 
-        val hashIndexPair = findValidHash(index)
-        val indexCharPair = f.invoke(index, hashIndexPair.first)
-
-        if (indexCharPair == null || list.map { it.first }.contains(indexCharPair.first))
-            return findPassword(hashIndexPair.second + 1, list, f)
-
-        return findPassword(hashIndexPair.second + 1, list + indexCharPair, f)
+        return if (indexChar == null || pass.map { it.first }.contains(indexChar.first))
+            findPassword(hashIndex.second + 1, pass, f) else findPassword(hashIndex.second + 1, pass + indexChar, f)
     }
 
     tailrec fun findValidHash(index: Int): Pair<String, Int> {
         val hash = findHash(inputString + index.toString())
-        if (hash.startsWith("00000"))
-            return Pair(hash, index)
 
-        return findValidHash(index + 1)
+        return if (hash.startsWith("00000")) Pair(hash, index)
+        else findValidHash(index + 1)
     }
 
     fun findHash(actual: String): String {
