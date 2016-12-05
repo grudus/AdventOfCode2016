@@ -1,6 +1,5 @@
-package advent2016.day5
+package advent2016
 
-import advent2016.Day
 import java.security.MessageDigest
 
 class Day5(input: String? = null) : Day(input) {

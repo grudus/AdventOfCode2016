@@ -17,7 +17,7 @@ class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
             listOf(null, 'A', 'B', 'C', null),
             listOf(null, null, 'D', null, null))
 
-    var actualPositionIndex = startPosition
+    var position = startPosition
 
     override fun firstStar(): String {
         return createMovement(keypad)
@@ -26,7 +26,7 @@ class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
     private fun createMovement(keyPad: List<List<Char?>>): String {
         return input.map {
             move(it, keyPad)
-            keyPad[actualPositionIndex.row][actualPositionIndex.column]
+            keyPad[position.row][position.column]
         }.joinToString("")
     }
 
@@ -36,24 +36,15 @@ class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
 
     private fun moveIfPossible(move: Char, keyPad: List<List<Char?>> = keypad) {
         when (move) {
-            'L' -> if (canMoveLeft(keyPad)) actualPositionIndex.column--
-            'R' -> if (canMoveRight(keyPad)) actualPositionIndex.column++
-            'U' -> if (canMoveUp(keyPad)) actualPositionIndex.row--
-            'D' -> if (canMoveDown(keyPad)) actualPositionIndex.row++
+            'L' -> if (canMove(keyPad, position.column - 1, position.row)) position.column--
+            'R' -> if (canMove(keyPad, position.column + 1, position.row)) position.column++
+            'U' -> if (canMove(keyPad, position.column, position.row - 1)) position.row--
+            'D' -> if (canMove(keyPad, position.column, position.row + 1)) position.row++
         }
     }
 
-    private fun canMoveLeft(keyPad: List<List<Char?>>) = actualPositionIndex.column != 0 &&
-            keyPad[actualPositionIndex.row][actualPositionIndex.column - 1] != null
-
-    private fun canMoveRight(keyPad: List<List<Char?>>) = actualPositionIndex.column != keyPad[actualPositionIndex.row].size - 1 &&
-            keyPad[actualPositionIndex.row][actualPositionIndex.column + 1] != null
-
-    private fun canMoveUp(keyPad: List<List<Char?>>) = actualPositionIndex.row != 0 &&
-            keyPad[actualPositionIndex.row - 1][actualPositionIndex.column] != null
-
-    private fun canMoveDown(keyPad: List<List<Char?>>) = actualPositionIndex.row != keyPad.size - 1 &&
-            keyPad[actualPositionIndex.row + 1][actualPositionIndex.column] != null
+    private fun canMove(keyPad: List<List<Char?>>, x: Int, y: Int) = x >= 0 && y >= 0
+            && x < keyPad[0].size && y < keyPad.size && keyPad[x][y] != null
 
 
     override fun secondStar(): String {
