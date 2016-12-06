@@ -8,7 +8,7 @@ abstract class Day(input: String? = null) {
     protected val inputString : String
 
     init {
-        val day = javaClass.simpleName.substring(3).toInt()
+        val day = try {javaClass.simpleName.substring(3).toInt()} catch (e: NumberFormatException) {4}
         inputString = input ?: File("src/main/resources/day$day/input").readText()
     }
 
