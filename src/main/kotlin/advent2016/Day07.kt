@@ -1,6 +1,6 @@
 package advent2016
 
-class Day7(input: String? = null) : Day(input) {
+class Day07(input: String? = null) : Day(input) {
 
     data class Word(val word: String, val inBrackets: Boolean)
 

@@ -2,7 +2,7 @@ package advent2016
 
 import java.util.*
 
-class Day8(input: String? = null) : Day(input) {
+class Day08(input: String? = null) : Day(input) {
 
     val screen = Array(6, { Array(50, { false }) })
 

@@ -1,7 +1,7 @@
 package advent2016
 
 
-class Day2(input: String? = null, startPosition: ArrayIndex) : Day(input) {
+class Day02(input: String? = null, startPosition: ArrayIndex) : Day(input) {
 
     val input: List<String> = super.inputString.split(Regex("\\n"))
 

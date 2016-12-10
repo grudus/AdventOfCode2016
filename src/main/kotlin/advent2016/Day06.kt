@@ -2,7 +2,7 @@ package advent2016
 
 import java.util.*
 
-class Day6(input: String? = null) : Day(input) {
+class Day06(input: String? = null) : Day(input) {
 
     val charsByColumn = super.inputString.split(Regex("\\n")).map {
         it.toCharArray().toList() }.rotate()

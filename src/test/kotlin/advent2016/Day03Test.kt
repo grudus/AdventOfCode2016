@@ -2,15 +2,15 @@ package advent2016
 
 import io.kotlintest.specs.FlatSpec
 
-class Day3Test : FlatSpec() {
+class Day03Test : FlatSpec() {
 
     init {
         "The first part" should "work for the given cases"  {
-            Day3("5 10 25").firstStar() shouldBe "0"
+            Day03("5 10 25").firstStar() shouldBe "0"
         }
 
         "The second part" should "work for the given case" {
-            Day3(
+            Day03(
                     """101 301 501
 102 302 502
 103 303 503

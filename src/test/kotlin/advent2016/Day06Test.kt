@@ -2,10 +2,10 @@ package advent2016
 
 import io.kotlintest.specs.FlatSpec
 
-class Day6Test : FlatSpec() {
+class Day06Test : FlatSpec() {
 	init{
         "The first part" should "work for the given cases"  {
-			Day6("""eedadn
+			Day06("""eedadn
 drvtee
 eandsr
 raavrd
@@ -24,7 +24,7 @@ enarar""").firstStar() shouldBe "easter"
 		}
 
         "The second part" should "work for the given case" {
-			Day6("""eedadn
+			Day06("""eedadn
 drvtee
 eandsr
 raavrd

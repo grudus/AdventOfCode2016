@@ -4,7 +4,7 @@ import java.util.regex.Pattern
 import kotlin.comparisons.compareByDescending
 import kotlin.comparisons.thenBy
 
-class Day4(input: String? = null) : Day(input) {
+class Day04(input: String? = null) : Day(input) {
 
     private fun inputList(): List<Room> {
         return super.inputString.split(Regex("\\n")).map { string ->

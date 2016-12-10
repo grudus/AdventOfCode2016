@@ -1,7 +1,7 @@
 package advent2016
 
 
-class Day3(input: String? = null) : Day(input) {
+class Day03(input: String? = null) : Day(input) {
 
     val triangleSides: List<List<Int>> = super.inputString.split(Regex("\\n"))
             .map { it.trim().split(Regex("\\s+")) }

@@ -1,6 +1,6 @@
 package advent2016
 
-class Day9(input: String? = null) : Day(input) {
+class Day09(input: String? = null) : Day(input) {
 
 
     override fun firstStar(): String {

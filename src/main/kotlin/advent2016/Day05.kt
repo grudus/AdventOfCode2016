@@ -2,7 +2,7 @@ package advent2016
 
 import java.security.MessageDigest
 
-class Day5(input: String? = null) : Day(input) {
+class Day05(input: String? = null) : Day(input) {
 
     val crypt: MessageDigest = MessageDigest.getInstance("MD5")
 
