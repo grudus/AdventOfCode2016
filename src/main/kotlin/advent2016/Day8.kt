@@ -1,5 +1,6 @@
 package advent2016
 
+import java.io.File
 import java.util.*
 
 class Day8(input: String? = null) : Day(input) {
@@ -9,9 +10,26 @@ class Day8(input: String? = null) : Day(input) {
     fun makeScreen() = super.inputString.lines().forEach { line ->
         val numbers = Regex("\\d+").findAll(line).map { it.groupValues[0].toInt() }.toList()
 
+        printscreen()
+
         if (line.startsWith("rect")) createRect(numbers[0], numbers[1])
         else if (line.contains("col")) rotateColumn(numbers[0], numbers[1])
         else rotateRow(numbers[0], numbers[1])
+    }
+
+    var counter = 0
+
+    private fun printscreen() {
+        val pretty = screen.map { it.map { if (it) "1" else "0" } }.map { it.joinToString(" ") }
+
+        val image = pretty
+        val validImage = "P1\n50 6\n" + pretty.joinToString("\n")
+
+        val dir = File("/home/grudus/IdeaProjects/PbmDrawer/out/artifacts/PbmDrawer_jar/film/")
+
+        val imageFile = File(dir, "${counter++}")
+        imageFile.createNewFile()
+        imageFile.writeText(validImage)
     }
 
     fun createRect(width: Int, height: Int) {
@@ -47,7 +65,6 @@ class Day8(input: String? = null) : Day(input) {
 
     override fun secondStar(): String {
         makeScreen()
-        screen.map { it.map { if (it) "#" else " " } }.forEach { println(it.joinToString(" ")) }
-        return "-1"
+        return "\n-1"
     }
 }
